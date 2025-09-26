@@ -3,62 +3,167 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Article - The UCN Times</title>
-  <link rel="stylesheet" href="scholar.css">
+  <title>404 - The Unicorner Times</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* Animated gradient background */
+    body {
+      background: linear-gradient(-45deg, #f9f9f9, #dfe9f3, #ffffff, #d7e1ec);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 1000;
+    }
+    .navbar .logo {
+      font-size: 20px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #333;
+    }
+    .nav-right {
+      display: flex;
+      gap: 20px;
+    }
+    .nav-right a {
+      text-decoration: none;
+      color: #333;
+      font-size: 15px;
+      transition: color 0.2s;
+    }
+    .nav-right a:hover {
+      color: #0073e6;
+    }
+
+    /* Hamburger button */
+    .menu-btn {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+    .menu-btn span {
+      width: 25px;
+      height: 3px;
+      background: #333;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* Mobile styles */
+    @media (max-width: 768px) {
+      .menu-btn {
+        display: flex;
+      }
+      .nav-right {
+        position: fixed;
+        top: 0;
+        left: -250px;
+        width: 200px;
+        height: 100%;
+        background: white;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        flex-direction: column;
+        padding: 60px 20px;
+        transition: left 0.3s ease;
+        z-index: 999;
+      }
+      .nav-right.show {
+        left: 0;
+      }
+      .nav-right a {
+        margin: 10px 0;
+        font-size: 1.1rem;
+      }
+    }
+
+    /* 404 Section */
+    .container {
+      text-align: center;
+      padding: 100px 20px;
+    }
+    .container h1 {
+      font-size: 80px;
+      margin-bottom: 20px;
+    }
+    .container p {
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+    .container a {
+      text-decoration: none;
+      background: #0073e6;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+    .container a:hover {
+      background: #005bb5;
+    }
+  </style>
 </head>
 <body>
 
-  <header>
-    
-    <nav>
-      <div class="nav-right" id="nav-links">
-      <a href="https://unicorner.uz">Home</a>
-      <a href="https://unicorner.uz/about.html">About</a>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="#" class="logo">The Unicorner Times</a>
+    <div class="menu-btn" id="menu-btn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="nav-right" id="nav-links">
+      <a href="https://unicorner.uz/about/">About</a>
       <a href="https://book.unicorner.uz">Books</a>
       <a href="https://research.unicorner.uz">Research</a>
+      <a href="https://article.unicorner.uz">Articles</a>
       <a href="https://publish.unicorner.uz">Publish</a>
-    </nav>
-  </header>
+      <a href="#">EN</a>
+      <a href="https://local.unicorner.uz">UZ</a>
+    </div>
+  </nav>
 
-  <!-- Background animation container -->
-  <div class="background-animation">
-    <div class="book"></div>
-    <div class="book"></div>
-    <div class="book"></div>
+  <!-- 404 Content -->
+  <div class="container">
+    <h1>404</h1>
+    <p>Oops! The page you’re looking for doesn’t exist.</p>
+    <a href="https://unicorner.uz">Back to Home</a>
   </div>
 
-  <main class="container">
-    <input type="text" id="searchInput" placeholder="Search articles..." class="search-bar">
+  <script>
+    const menuBtn = document.getElementById("menu-btn");
+    const navLinks = document.getElementById("nav-links");
 
-    <div id="articles-container">
-      <div class="article-item">
-        <a href="articles/Demertzi_ANYAS09.pdf" class="title">Dualism Persists in the Science of Mind</a>
-        <div class="article-meta">Annals of the New York Academy of Sciences • ResearchGate • 2009</div>
-        <a href="articles/Demertzi_ANYAS09.pdf" class="download-btn" target="_blank">Download PDF</a>
-      </div>
-      <div class="article-item">
-        <a href="articles/dubai.pdf" class="title">Global media and brand Dubai</a>
-        <div class="article-meta">Jad Melki • ResearchGate • 2021</div>
-        <a href="articles/article1.pdf" class="download-btn" target="_blank">Download PDF</a>
-      </div>
-      <div class="article-item">
-        <a href="articles/article1.pdf" class="title">Concepts of Economics</a>
-        <div class="article-meta">APonomics • Economics Studies • 2025</div>
-        <a href="articles/article1.pdf" class="download-btn" target="_blank">Download PDF</a>
-      </div>
-      <div class="article-item">
-        <a href="articles/JSMA Research Guide-KAWS.pdf" class="title">JSMA Research Guide-KAWS</a>
-        <div class="article-meta">University of Oregon • Art • 2020</div>
-        <a href="articles/JSMA Research Guide-KAWS.pdf" class="download-btn" target="_blank">Download PDF</a>
-      </div>
-      <!-- Copy this block to add new articles -->
-    </div>
-  </main>
+    menuBtn.addEventListener("click", () => {
+      navLinks.classList.toggle("show");
+    });
+  </script>
 
-  <footer>
-    <p>© 2025 The Unicorner Times. All rights reserved.</p>
-  </footer>
-
-  <script src="scholar.js"></script>
 </body>
 </html>
