@@ -3,167 +3,291 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>404 - The Unicorner Times</title>
+  <title>Articles - The UCN Times</title>
   <style>
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* Splash Screen */
+    #splash {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
     }
-    body {
-      font-family: Arial, sans-serif;
-      color: #333;
-      overflow-x: hidden;
+    .loader {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #333;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1.2s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
-    /* Animated gradient background */
     body {
-      background: linear-gradient(-45deg, #f9f9f9, #dfe9f3, #ffffff, #d7e1ec);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-    }
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+      margin: 0;
+      overflow-x: hidden;
     }
 
     /* Navbar */
     .navbar {
+      background: #eeeeee;
+      color: #555;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 30px;
-      background: white;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 12px 20px;
       position: relative;
-      z-index: 1000;
     }
-    .navbar .logo {
+    .navbar a {
+      color: #555;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+    .navbar a:hover {
+      color: #333;
+    }
+    .logo {
       font-size: 20px;
       font-weight: bold;
+      font-family: "Brush Script MT", cursive;
       text-decoration: none;
       color: #333;
+    }
+    .logo:hover {
+      color: #ff6600;
     }
     .nav-right {
       display: flex;
-      gap: 20px;
-    }
-    .nav-right a {
-      text-decoration: none;
-      color: #333;
-      font-size: 15px;
-      transition: color 0.2s;
-    }
-    .nav-right a:hover {
-      color: #0073e6;
     }
 
     /* Hamburger button */
-    .menu-btn {
+    .hamburger {
       display: none;
       flex-direction: column;
-      gap: 5px;
       cursor: pointer;
     }
-    .menu-btn span {
-      width: 25px;
+    .hamburger span {
       height: 3px;
+      width: 25px;
       background: #333;
-      border-radius: 2px;
-      transition: 0.3s;
+      margin: 4px 0;
+      transition: 0.4s;
     }
-
-    /* Mobile styles */
+    .nav-right.mobile {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background: #eeeeee;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    .nav-right.mobile a {
+      margin: 10px 0;
+    }
+    .nav-right.show {
+      display: flex;
+    }
     @media (max-width: 768px) {
-      .menu-btn {
+      .nav-right {
+        display: none;
+      }
+      .hamburger {
         display: flex;
       }
-      .nav-right {
-        position: fixed;
-        top: 0;
-        left: -250px;
-        width: 200px;
-        height: 100%;
-        background: white;
-        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-        flex-direction: column;
-        padding: 60px 20px;
-        transition: left 0.3s ease;
-        z-index: 999;
-      }
-      .nav-right.show {
-        left: 0;
-      }
-      .nav-right a {
-        margin: 10px 0;
-        font-size: 1.1rem;
-      }
     }
 
-    /* 404 Section */
-    .container {
-      text-align: center;
-      padding: 100px 20px;
+    /* Article list */
+    .article-list {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
     }
-    .container h1 {
-      font-size: 80px;
+    .article-list h1 {
+      margin-bottom: 15px;
+      color: #444;
+    }
+    .search-bar {
+      width: 100%;
+      padding: 10px;
       margin-bottom: 20px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      background: #fff;
+      border-radius: 4px;
     }
-    .container p {
-      font-size: 20px;
-      margin-bottom: 30px;
+    .article-item {
+      padding: 15px;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .container a {
+    .article-info {
+      max-width: 70%;
+    }
+    .article-item a.title {
+      color: #666;
       text-decoration: none;
-      background: #0073e6;
-      color: white;
-      padding: 12px 25px;
-      border-radius: 5px;
-      transition: background 0.3s;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
     }
-    .container a:hover {
-      background: #005bb5;
+    .article-item a.title:hover {
+      color: #333;
+    }
+    .article-item p {
+      font-size: 14px;
+      color: #777;
+      margin: 0;
+    }
+    .download-btn {
+      background: #007bff;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background 0.3s;
+      white-space: nowrap;
+    }
+    .download-btn:hover {
+      background: #0056b3;
+    }
+
+    /* Floating dots */
+    .dots {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .dot {
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.05);
+      border-radius: 50%;
+      animation: float 8s infinite ease-in-out;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <a href="#" class="logo">The Unicorner Times</a>
-    <div class="menu-btn" id="menu-btn">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-    <div class="nav-right" id="nav-links">
-      <a href="https://unicorner.uz/about/">About</a>
-      <a href="https://book.unicorner.uz">Books</a>
-      <a href="https://research.unicorner.uz">Research</a>
-      <a href="https://article.unicorner.uz">Articles</a>
-      <a href="https://publish.unicorner.uz">Publish</a>
-      <a href="#">EN</a>
-      <a href="https://local.unicorner.uz">UZ</a>
-    </div>
-  </nav>
+  <!-- Splash Screen -->
+  <div id="splash">
+    <div class="loader"></div>
+  </div>
 
-  <!-- 404 Content -->
-  <div class="container">
-    <h1>404</h1>
-    <p>Oops! The page you’re looking for doesn’t exist.</p>
-    <a href="https://unicorner.uz">Back to Home</a>
+  <!-- Main Content -->
+  <div id="content" style="display:none;">
+    <header>
+      <nav class="navbar">
+        <div class="nav-left">
+          <a href="https://unicorner.uz" class="logo">Articles</a>
+        </div>
+        <div class="hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="nav-right" id="navLinks">
+          <a href="https://unicorner.uz">Home</a>
+          <a href="https://unicorner.uz/about.html">About</a>
+          <a href="https://book.unicorner.uz">Books</a>
+          <a href="https://research.unicorner.uz">Research</a>
+          <a href="https://publish.unicorner.uz">Publish</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="article-list">
+      <h1>Articles</h1>
+      <input type="text" id="searchInput" class="search-bar" placeholder="Search articles...">
+
+      <div id="articleContainer">
+        <div class="article-item">
+          <div class="article-info">
+            <a href="articles/future-of-ai.pdf" class="title" target="_blank">The Future of AI</a>
+            <p>2023 · Technology · PDF</p>
+          </div>
+          <a href="articles/future-of-ai.pdf" download class="download-btn">Download</a>
+        </div>
+
+        <div class="article-item">
+          <div class="article-info">
+            <a href="articles/green-energy.pdf" class="title" target="_blank">Green Energy Revolution</a>
+            <p>2022 · Environment · PDF</p>
+          </div>
+          <a href="articles/green-energy.pdf" download class="download-btn">Download</a>
+        </div>
+
+        <div class="article-item">
+          <div class="article-info">
+            <a href="articles/global-education.pdf" class="title" target="_blank">Global Education Challenges</a>
+            <p>2021 · Education · PDF</p>
+          </div>
+          <a href="articles/global-education.pdf" download class="download-btn">Download</a>
+        </div>
+      </div>
+    </main>
   </div>
 
   <script>
-    const menuBtn = document.getElementById("menu-btn");
-    const navLinks = document.getElementById("nav-links");
+    // Splash screen logic
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("splash").style.display = "none";
+        document.getElementById("content").style.display = "block";
+      }, 2000);
+    });
 
-    menuBtn.addEventListener("click", () => {
-      navLinks.classList.toggle("show");
+    // Floating dots
+    document.addEventListener("DOMContentLoaded", function () {
+      const dotsContainer = document.createElement("div");
+      dotsContainer.classList.add("dots");
+      document.body.appendChild(dotsContainer);
+
+      const numDots = 50;
+      for (let i = 0; i < numDots; i++) {
+        const dot = document.createElement("div");
+        dot.classList.add("dot");
+        dot.style.left = Math.random() * 100 + "vw";
+        const duration = 5 + Math.random() * 5;
+        const delay = Math.random() * 10;
+        dot.style.animationDuration = duration + "s";
+        dot.style.animationDelay = delay + "s";
+        const size = 3 + Math.random() * 5;
+        dot.style.width = size + "px";
+        dot.style.height = size + "px";
+        dotsContainer.appendChild(dot);
+      }
+    });
+
+    // Hamburger menu toggle
+    document.getElementById("hamburger").addEventListener("click", () => {
+      document.getElementById("navLinks").classList.toggle("show");
+      document.getElementById("navLinks").classList.toggle("mobile");
     });
   </script>
-
 </body>
 </html>
